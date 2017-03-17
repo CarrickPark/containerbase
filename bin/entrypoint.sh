@@ -15,7 +15,7 @@ if [ "${1:0:1}" = '-' ]; then
 	EXEC_COMMAND="$@"
 else
     # run consul agent and consul template in addition to the command specified
-	AGENT="/bin/consul agent -config-dir/config -join=$CP_ORCHESTRATOR_PRIMARY_IP -encrypt=$CP_ORCHESTRATOR_ENCRYPT"
+	AGENT="/bin/consul agent -config-dir=/config -join=$CP_ORCHESTRATOR_PRIMARY_IP -encrypt=$CP_ORCHESTRATOR_ENCRYPT"
 	#echo Running Agent: "$AGENT"
 
 	# run agent in background
