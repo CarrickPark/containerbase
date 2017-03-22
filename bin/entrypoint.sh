@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# automatically deregister when container is stopped
+trap '/bin/consul leave' SIGTERM
+
 if [ "${1:0:1}" = '-' ]; then
 	# command starts with dash so it must be options for consul agent
 
@@ -15,7 +18,8 @@ if [ "${1:0:1}" = '-' ]; then
 	EXEC_COMMAND="$@"
 else
     # run consul agent and consul template in addition to the command specified
-	AGENT="/bin/consul agent -config-dir=/config -join=$CP_ORCHESTRATOR_PRIMARY_IP -encrypt=$CP_ORCHESTRATOR_ENCRYPT"
+		# delay a few seconds to allow consul template to finish
+	AGENT="sleep 5;/bin/consul agent -config-dir=/config -join=$CP_ORCHESTRATOR_PRIMARY_IP -encrypt=$CP_ORCHESTRATOR_ENCRYPT"
 	#echo Running Agent: "$AGENT"
 
 	# run agent in background
