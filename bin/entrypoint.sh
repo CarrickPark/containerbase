@@ -32,13 +32,13 @@ else
 	AGENT="/bin/consul agent -config-dir=/config -join=$CP_ORCHESTRATOR_PRIMARY_IP -encrypt=$CP_ORCHESTRATOR_ENCRYPT -bind=0.0.0.0 -advertise=$AGENT_BIND_CLIENT_IP -client=$AGENT_BIND_CLIENT_IP"
 	#echo Running Agent: "$AGENT"
 
-	# give a second for the agent to start
-	sleep 5
-
 	# run agent in background
 	/bin/bash -c "$AGENT" &
 
 	EXEC_COMMAND="$@"
+
+	# give a second for the agent to start
+	sleep 5
 fi
 
 ## support up to 6 templated files or just execute the command directly
